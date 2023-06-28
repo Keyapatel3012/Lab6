@@ -1,3 +1,8 @@
+import requests
+import hashlib
+import subprocess
+import os
+
 def main():
 
     # Get the expected SHA-256 hash value of the VLC installer
@@ -29,6 +34,15 @@ def get_expected_sha256():
     # TODO: Step 1
     # Hint: See example code in lab instructions entitled "Extracting Text from a Response Message Body"
     # Hint: Use str class methods, str slicing, and/or regex to extract the expected SHA-256 value from the text 
+    file_url = 'https://www.videolan.org/'
+    resp_msg = requests.get(file_url)
+
+    if resp_msg.status_code == requests.codes.ok:
+        file_content = resp_msg.content
+        jokes = file_content.split('~~~~~~~~~~~~~~~~~~~~~~~~~\n')
+        print(jokes[4])
+       
+
     return 
 
 def download_installer():
@@ -39,6 +53,13 @@ def download_installer():
     """
     # TODO: Step 2
     # Hint: See example code in lab instructions entitled "Downloading a Binary File"
+    file_url = 
+    resp_msg = requests.get(file_url)
+    
+    if resp_msg.status_code == requests.codes.ok:
+        file_content = resp_msg.content
+        with open(r'C:\temp\dog.jpg', 'wb') as file:
+            file.write(file_content)
     return
 
 def installer_ok(installer_data, expected_sha256):
@@ -54,6 +75,13 @@ def installer_ok(installer_data, expected_sha256):
     """    
     # TODO: Step 3
     # Hint: See example code in lab instructions entitled "Computing the Hash Value of a Response Message Body"
+    file_url = 
+    resp_msg = requests.get(file_url)
+    
+    if resp_msg.status_code == requests.codes.ok:
+        file_content = resp_msg.content
+        image_hash = hashlib.sha256(file_content).hexdigest()
+        print(image_hash)
     return
 
 def save_installer(installer_data):
@@ -77,6 +105,9 @@ def run_installer(installer_path):
     """    
     # TODO: Step 5
     # Hint: See example code in lab instructions entitled "Running the VLC Installer"
+    installer_path = r'C:\temp\vlc-3.0.17.4-win64.exe'
+    subprocess.run([installer_path, '/L=1033', '/S'])
+    os.remove(installer_path)
     return
     
 def delete_installer(installer_path):
