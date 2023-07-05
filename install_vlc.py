@@ -40,10 +40,14 @@ def get_expected_sha256():
     if resp_msg.status_code == requests.codes.ok:
         hash_content = resp_msg.text
         expected_sha256 = extract_hash_value(hash_content)
-        
-       
-
-    return expected_sha256
+        return expected_sha256
+    
+def extract_hash_value(hash_content):
+    lines = hash_content.split('\n')
+    for line in lines:
+     if line.endswith('vlc-3.0.17.4-win64.exe'):
+      return line.split(' ')[0]
+    
 
 def download_installer():
     """Downloads, but does not save, the .exe VLC installer file for 64-bit Windows.
